@@ -69,3 +69,21 @@ app.put("/all-bookings/:id", async (req, res) => {
   const result = await AllBookings.updateOne(filter, updatedDoc, optitons);
   res.send({ success: true });
 });
+
+app.put("/all-bookings/update-date/:id", async (req, res) => {
+  const id = req.params.id;
+  const date = req.body.editedDate;
+  const title = req.body.title;
+  const filter = { _id: ObjectId(id) };
+  const options = { upsert: true };
+  const updatedDoc = {
+    $set: {
+      event: {
+        date: date,
+        title: title,
+      },
+    },
+  };
+  const result = await AllBookings.updateOne(filter, updatedDoc, options);
+  res.send({ success: true });
+});
